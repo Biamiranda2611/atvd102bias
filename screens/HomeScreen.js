@@ -25,7 +25,12 @@ export default function HomeScreen({ user }) {
         setContacts([]);
         return;
       }
-      const parsed = Object.keys(data).map(key => ({ key, ...data[key] }));
+
+      const parsed = Object.keys(data).map(key => ({
+        key,
+        ...data[key]
+      }));
+
       setContacts(parsed);
     });
 
@@ -44,22 +49,16 @@ export default function HomeScreen({ user }) {
     }
   };
 
-  const deleteContact = (key) => {
-    Alert.alert("Confirmar", "Deseja excluir este contato?", [
-      { text: "Cancelar", style: "cancel" },
-      {
-        text: "Excluir",
-        style: "destructive",
-        onPress: async () => {
-          try {
-            await remove(ref(db, `contacts/${uid}/${key}`));
-          } catch (err) {
-            Alert.alert("Erro ao excluir", err.message);
-          }
-        }
-      }
-    ]);
-  };
+  const deleteContact = async (key) => {
+  if (!key) return;
+
+  try {
+    await remove(ref(db, `contacts/${uid}/${key}`));
+  } catch (err) {
+    Alert.alert("Erro ao excluir", err.message);
+  }
+};
+
 
   const startEdit = (item) => {
     setEditingKey(item.key);
@@ -98,7 +97,10 @@ export default function HomeScreen({ user }) {
       <TouchableOpacity style={styles.btn} onPress={() => startEdit(item)}>
         <Text style={styles.btnText}>Editar</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.btn, { backgroundColor: "#e74c3c" }]} onPress={() => deleteContact(item.key)}>
+      <TouchableOpacity
+        style={[styles.btn, { backgroundColor: "#e74c3c" }]}
+        onPress={() => deleteContact(item.key)}
+      >
         <Text style={styles.btnText}>Excluir</Text>
       </TouchableOpacity>
     </View>

@@ -10,7 +10,10 @@ const firebaseConfig = {
   storageBucket: "proj2-bbf9f.firebasestorage.app",
   messagingSenderId: "553099144273",
   appId: "1:553099144273:web:fe2a4d914a4792c429dc70",
-  measurementId: "G-KPG3XF4951"
+  measurementId: "G-KPG3XF4951",
+
+  // ✅ MUITO IMPORTANTE PARA O REALTIME DATABASE FUNCIONAR
+  databaseURL: "https://proj2-bbf9f-default-rtdb.firebaseio.com/"
 };
 
 const app = initializeApp(firebaseConfig);
